@@ -10,7 +10,7 @@ import java.io.*;
 
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
-        discretehopfield hopfieldNet = new discretehopfield(10, 10);
+        discretehopfield hopfieldNet = new discretehopfield(100, 100);
         System.out.println("Welcome to my Discrete Hopfield Neural Net!");
         boolean rerun = true;
         while (rerun){

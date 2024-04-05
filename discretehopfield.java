@@ -39,11 +39,15 @@ public class discretehopfield {
             throw new IllegalArgumentException("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
 
-        int[][] result = new int[rows1][cols2];
+        int[][] result = new int[100][100];
 
-        for (int i = 0; i < rows1; i++) {
-            for (int j = 0; j < cols2; j++) {
-                result[i][j] = matrix1[i][j] * matrix2[i][j];
+        for (int curr = 0; curr < 10; curr++){
+            for (int curc = 0; curc < 10; curc++){
+                for (int i = 0; i < rows1; i++) {
+                    for (int j = 0; j < cols2; j++) {
+                        result[(curr*10)+i][(curc*10)+j] = matrix1[curr][curc] * matrix2[i][j];
+                    }
+                }
             }
         }
 
@@ -73,7 +77,7 @@ public class discretehopfield {
     //set neuron weights with reading weight file
     public void readWeightFile(File input){
         Scanner weightScan;
-        int [][] weightMatrix = new int[10][10];
+        int [][] weightMatrix = new int[100][100];
         try{
             weightScan = new Scanner(input);
             //jump past the headers of the file
@@ -104,13 +108,13 @@ public class discretehopfield {
                 weightScan.nextLine();
             }
             //set diagonal elements to 0
-            for (int e = 0; e < 10; e++){
+            for (int e = 0; e < 100; e++){
                 weightMatrix[e][e] = 0;
             }
             //add weight vectors by column to neurons as their own weight vectors
-            for (int c = 0; c< 10; c++){
+            for (int c = 0; c< 100; c++){
                 int[] weightVector = new int [10];
-                for (int r = 0; r<10; r++){
+                for (int r = 0; r<100; r++){
                     weightVector[r] = weightMatrix[r][c];
                 }
                 neurons[c].setWeights(weightVector);
