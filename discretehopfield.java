@@ -13,6 +13,7 @@ public class discretehopfield {
         }
     }
 
+    //matrix functions
     public static int[][] transpose(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
@@ -69,6 +70,7 @@ public class discretehopfield {
         return result;
     }
 
+    //set neuron weights with reading weight file
     public void readWeightFile(File input){
         Scanner weightScan;
         int [][] weightMatrix = new int[10][10];
@@ -77,8 +79,10 @@ public class discretehopfield {
             //jump past the headers of the file
             weightScan.nextLine();
             weightScan.nextLine();
+            int[][] curMatrix = new int[10][10];
             while (weightScan.hasNext()) {
-                int[][] curMatrix = new int[10][10];
+                
+                //double for loop reads one matrix
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = weightScan.next();
@@ -92,10 +96,24 @@ public class discretehopfield {
                     }
 
                 }
+                //add outer product to weight matrix sum
                 int[][] transposeMatrix = transpose(curMatrix);
                 int[][] productMatrix = outerProduct(transposeMatrix, curMatrix);
                 weightMatrix = add(weightMatrix, productMatrix);
+
                 weightScan.nextLine();
+            }
+            //set diagonal elements to 0
+            for (int e = 0; e < 10; e++){
+                weightMatrix[e][e] = 0;
+            }
+            //add weight vectors by column to neurons as their own weight vectors
+            for (int c = 0; c< 10; c++){
+                int[] weightVector = new int [10];
+                for (int r = 0; r<10; r++){
+                    weightVector[r] = weightMatrix[r][c];
+                }
+                neurons[c].setWeights(weightVector);
             }
 
         }

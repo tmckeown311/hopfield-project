@@ -10,6 +10,7 @@ import java.io.*;
 
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
+        discretehopfield hopfieldNet = new discretehopfield(10, 10);
         System.out.println("Welcome to my Discrete Hopfield Neural Net!");
         boolean rerun = true;
         while (rerun){
@@ -22,18 +23,18 @@ import java.io.*;
             if (userChoice == 1){
                 System.out.println("Enter the training data file name: ");
                 String trainingFile = scan.next();
-                int[] inOut = getInputAndOutputSize(trainingFile, 3);
-
-                System.out.println("Enter a filename to save weights to: ");
+                
+                //We could leave out saving weight to file and just directly use weights read from input file, saves lot of file reading/writing code
+                //System.out.println("Enter a filename to save weights to: ");
+                
                 //function for weight training here
+                hopfieldNet.readWeightFile(new File(trainingFile));
 
             }
             else if (userChoice == 2){
                 System.out.println("Enter the trained weight settings input data file name:");
                 String weightFileData = scan.next();
-
-
-                int[] headers = getInputAndOutputSize(weightFileData, 2);
+                hopfieldNet.readWeightFile(new File(weightFileData));
 
                 //function the reads weight file here
             }

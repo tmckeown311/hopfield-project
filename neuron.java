@@ -5,11 +5,11 @@
  */ 
 
 public class neuron{
-    double[] weights;
+    int[] weights;
     int neuronNum;//for numbering neurons for selection etc.
     
     public neuron(int numInputs, int num){
-        weights = new double[numInputs];
+        weights = new int[numInputs];
         neuronNum = num;
     }
 
@@ -67,7 +67,7 @@ public class neuron{
         }
     }
 
-    public double[] getWeights(){
+    public int[] getWeights(){
         return weights;
     }
 
@@ -75,7 +75,7 @@ public class neuron{
         return neuronNum;
     }
 
-    public void setWeights(double[] winput){
+    public void setWeights(int[] winput){
         weights = winput;
     }
 
