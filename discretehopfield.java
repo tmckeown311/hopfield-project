@@ -121,10 +121,48 @@ public class discretehopfield {
             }
 
         }
+
         catch(Exception e) {
             System.out.println(e);
         }
 
+    }
+
+    public void testInput(File inputFile){
+        Scanner inputScan;
+        int[][] inputMatrix = new int[10][10];
+        try{
+            inputScan = new Scanner(inputFile);
+            inputScan.nextLine();
+            inputScan.nextLine();
+            
+            while (inputScan.hasNext()) {
+                
+                //double for loop reads one matrix
+                for (int r = 0; r < 10; r++){
+                    for (int c = 0; c<10; c++){
+                        String curIn = inputScan.next();
+                        if (curIn == "0"){
+                            inputMatrix[r][c] = 1;
+                        }
+                        else{
+                            inputMatrix[r][c] = -1;
+                        }
+
+                    }
+
+                }
+                //initialize list of remaining neurons to choose from while testing
+                int[] neuronsLeft= new int [10];
+                for (int i = 0; i < 10; i++){
+                    neuronsLeft[i] = i;
+                }
+
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
     }
 
 }
