@@ -51,7 +51,7 @@ public class neuron{
     */
 
     //this is assuming we input right weight column and x value
-    public int calcAnswer(int[] yins, int x, int[] weights){
+    public int calcAnswer(int[] yins, int x){
         int yin = x;
         for (int i=0; i<weights.length; i++){
             yin += yins[i] * weights[i];

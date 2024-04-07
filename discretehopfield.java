@@ -1,6 +1,8 @@
 import java.io.File;
 import java.util.Scanner;
-import java.util.random.*;
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class discretehopfield {
 
@@ -128,6 +130,15 @@ public class discretehopfield {
 
     }
 
+    public boolean allElementsNotZero(ArrayList<Integer> arr){
+        for (int i = 0; i < arr.size(); i++){
+            if (arr.get(i) != 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void testInput(File inputFile){
         Scanner inputScan;
         int[][] inputMatrix = new int[10][10];
@@ -152,10 +163,26 @@ public class discretehopfield {
                     }
 
                 }
+                Random random = new Random();
                 //initialize list of remaining neurons to choose from while testing
-                int[] neuronsLeft= new int [10];
-                for (int i = 0; i < 10; i++){
-                    neuronsLeft[i] = i;
+                ArrayList<Integer> neuronsLeft= new ArrayList<>();
+                for (int i = 0; i < 100; i++){
+                    neuronsLeft.add(i);
+                }
+                int [][] y = Arrays.copyOf(inputMatrix, inputMatrix.length);
+                while (allElementsNotZero(neuronsLeft)){
+                    //randomly select neuron
+                    int index = random.nextInt(neuronsLeft.size());
+                    int nextIndex = neuronsLeft.get(index);
+                    neuronsLeft.remove(index);
+                    //idk how to get value xi for testing rn
+                    neuron curNeuron = neurons[nextIndex];
+                    int [] yin = new int[100];
+                    for (int i = 0; i < 100; i++){
+                        yin[i] = y[i][nextIndex];
+                    }
+
+                    int answer = curNeuron.calcAnswer(yin, );
                 }
 
             }
