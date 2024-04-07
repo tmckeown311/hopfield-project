@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class discretehopfield {
             }
             //add weight vectors by column to neurons as their own weight vectors
             for (int c = 0; c< 100; c++){
-                int[] weightVector = new int [10];
+                int[] weightVector = new int [100];
                 for (int r = 0; r<100; r++){
                     weightVector[r] = weightMatrix[r][c];
                 }
@@ -139,14 +140,16 @@ public class discretehopfield {
         return false;
     }
 
-    public void testInput(File inputFile){
+    public void testInput(File inputFile, File outputFile){
         Scanner inputScan;
+        FileWriter outputScan;
         int[][] inputMatrix = new int[10][10];
         try{
             inputScan = new Scanner(inputFile);
             inputScan.nextLine();
             inputScan.nextLine();
-            
+            inputScan.nextLine();
+            outputScan = new FileWriter(outputFile);
             while (inputScan.hasNext()) {
                 
                 //double for loop reads one matrix
@@ -163,29 +166,60 @@ public class discretehopfield {
                     }
 
                 }
+                inputScan.nextLine();
                 Random random = new Random();
-                //initialize list of remaining neurons to choose from while testing
-                ArrayList<Integer> neuronsLeft= new ArrayList<>();
-                for (int i = 0; i < 100; i++){
-                    neuronsLeft.add(i);
-                }
-                int [][] y = Arrays.copyOf(inputMatrix, inputMatrix.length);
-                while (allElementsNotZero(neuronsLeft)){
-                    //randomly select neuron
-                    int index = random.nextInt(neuronsLeft.size());
-                    int nextIndex = neuronsLeft.get(index);
-                    neuronsLeft.remove(index);
-                    //idk how to get value xi for testing rn
-                    neuron curNeuron = neurons[nextIndex];
-                    int [] yin = new int[100];
+                int [] yin = new int[100];
+                        for (int r = 0; r < 10; r++){
+                            for (int c = 0; c<10; c++){
+                                yin[(r*10)+c] = inputMatrix[r][c];
+                            }
+                        }
+                boolean converged = false;
+                while (!converged){
+                    converged = true;
+                    //initialize list of remaining neurons to choose from while testing
+                    ArrayList<Integer> neuronsLeft= new ArrayList<>();
                     for (int i = 0; i < 100; i++){
-                        yin[i] = y[i][nextIndex];
+                        neuronsLeft.add(i);
                     }
+                    while (allElementsNotZero(neuronsLeft)){
+                        //randomly select neuron
+                        int index = random.nextInt(neuronsLeft.size());
+                        int nextIndex = neuronsLeft.get(index);
+                        neuronsLeft.remove(index);
+                        //test selected neuron
+                        neuron curNeuron = neurons[nextIndex];
+                        int x = inputMatrix[nextIndex/10][nextIndex%10];
+                        int answer = curNeuron.calcAnswer(yin, x);
+                        //if undecided, keep old value and doesn't converge
+                        if (answer == 0){
+                            converged = false;
+                        }
+                        //if diff value, change yin and doesn't converge
+                        else if (answer != yin[nextIndex]){
+                            converged = false;
+                            yin[nextIndex] = answer;
+                        }
+                        //otherwise change nothing and go to next neuron with same yin
 
-                    int answer = curNeuron.calcAnswer(yin, );
+                    }
                 }
-
+                //write out pattern recognized to file
+                outputScan.write("Pattern Recognized:\n");
+                for (int i = 0; i < 10; i++){
+                    for (int j = 0; j < 10; j++){
+                        if (yin[(i*10)+j] == 1){
+                            outputScan.write('0');
+                        }
+                        else if (yin[(i*10)+j] == -1){
+                            outputScan.write(' ');
+                        }
+                    }
+                    outputScan.write('\n');
+                }
+                outputScan.write("\n\n");
             }
+            outputScan.close();
         }
         catch(Exception e) {
             System.out.println(e);
