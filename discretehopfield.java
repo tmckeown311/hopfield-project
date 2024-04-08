@@ -104,6 +104,7 @@ public class discretehopfield {
                         }
 
                     }
+                    weightScan.nextLine();
 
                 }
                 //add outer product to weight matrix sum
@@ -177,6 +178,7 @@ public class discretehopfield {
                         }
 
                     }
+                    inputScan.nextLine();
 
                 }
                 inputScan.nextLine();
@@ -222,7 +224,7 @@ public class discretehopfield {
                 for (int i = 0; i < 10; i++){
                     for (int j = 0; j < 10; j++){
                         if (yin[(i*10)+j] == 1){
-                            outputScan.write('0');
+                            outputScan.write('O');
                         }
                         else if (yin[(i*10)+j] == -1){
                             outputScan.write(' ');
