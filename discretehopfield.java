@@ -44,11 +44,11 @@ public class discretehopfield {
 
         int[][] result = new int[100][100];
 
-        for (int curr = 0; curr < 10; curr++){
-            for (int curc = 0; curc < 10; curc++){
-                for (int i = 0; i < rows1; i++) {
+        for (int curr = 0; curr < rows1; curr++){
+            for (int curc = 0; curc < cols1; curc++){
+                for (int i = 0; i < rows2; i++) {
                     for (int j = 0; j < cols2; j++) {
-                        result[(curr*10)+i][(curc*10)+j] = matrix1[curr][curc] * matrix2[i][j];
+                        result[(curr*10)+curc][(i*10)+j] = matrix1[curr][curc] * matrix2[i][j];
                     }
                 }
             }
@@ -87,15 +87,17 @@ public class discretehopfield {
             weightScan.useDelimiter("");
             //jump past the headers of the file
             weightScan.nextLine();
+            int numImages = weightScan.nextInt();
             weightScan.nextLine();
             weightScan.nextLine();
             int[][] curMatrix = new int[10][10];
-            while (weightScan.hasNext()) {
+           for (int y = 0; y < numImages; y++) {
                 
                 //double for loop reads one matrix
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = weightScan.next();
+                        System.out.print(curIn);
                         if ("O".equals(curIn)){
                             curMatrix[r][c] = 1;
                         }
@@ -104,7 +106,10 @@ public class discretehopfield {
                         }
 
                     }
-                    weightScan.nextLine();
+                    System.out.println();
+                    if (weightScan.hasNext()){
+                        weightScan.nextLine();
+                    }
 
                 }
                 //add outer product to weight matrix sum
@@ -112,7 +117,9 @@ public class discretehopfield {
                 int[][] productMatrix = outerProduct(transposeMatrix, curMatrix);
                 weightMatrix = add(weightMatrix, productMatrix);
 
-                weightScan.nextLine();
+                if (weightScan.hasNext()){
+                    weightScan.nextLine();
+                }
             }
             //set diagonal elements to 0
             for (int e = 0; e < 100; e++){
@@ -129,12 +136,13 @@ public class discretehopfield {
             outputScan = new FileWriter(output);
             for (int i = 0; i < 100; i++){
                 for (int j = 0; j < 100; j++){
-                    outputScan.write(weightMatrix[i][j]);
+                    outputScan.write(String.valueOf(weightMatrix[i][j]));
                 }
                 outputScan.write('\n');
 
             }
             outputScan.close();
+            weightScan.close();
 
         }
 
