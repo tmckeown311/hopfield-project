@@ -78,12 +78,15 @@ public class discretehopfield {
     }
 
     //set neuron weights with reading weight file
-    public void readWeightFile(File input){
+    public void readWeightFile(File input, File output){
         Scanner weightScan;
+        FileWriter outputScan;
         int [][] weightMatrix = new int[100][100];
         try{
             weightScan = new Scanner(input);
+            weightScan.useDelimiter("");
             //jump past the headers of the file
+            weightScan.nextLine();
             weightScan.nextLine();
             weightScan.nextLine();
             int[][] curMatrix = new int[10][10];
@@ -93,7 +96,7 @@ public class discretehopfield {
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = weightScan.next();
-                        if (curIn == "0"){
+                        if ("O".equals(curIn)){
                             curMatrix[r][c] = 1;
                         }
                         else{
@@ -122,6 +125,15 @@ public class discretehopfield {
                 }
                 neurons[c].setWeights(weightVector);
             }
+            outputScan = new FileWriter(output);
+            for (int i = 0; i < 100; i++){
+                for (int j = 0; j < 100; j++){
+                    outputScan.write(weightMatrix[i][j]);
+                }
+                outputScan.write('\n');
+
+            }
+            outputScan.close();
 
         }
 
@@ -146,6 +158,7 @@ public class discretehopfield {
         int[][] inputMatrix = new int[10][10];
         try{
             inputScan = new Scanner(inputFile);
+            inputScan.useDelimiter("");
             inputScan.nextLine();
             inputScan.nextLine();
             inputScan.nextLine();
@@ -156,7 +169,7 @@ public class discretehopfield {
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = inputScan.next();
-                        if (curIn == "0"){
+                        if ("O".equals(curIn)){
                             inputMatrix[r][c] = 1;
                         }
                         else{
