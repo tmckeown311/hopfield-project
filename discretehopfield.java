@@ -169,10 +169,11 @@ public class discretehopfield {
             inputScan = new Scanner(inputFile);
             inputScan.useDelimiter("");
             inputScan.nextLine();
+            int numImages = inputScan.nextInt();
             inputScan.nextLine();
             inputScan.nextLine();
             outputScan = new FileWriter(outputFile);
-            while (inputScan.hasNext()) {
+            for (int y = 0; y < numImages; y++) {
                 
                 //double for loop reads one matrix
                 for (int r = 0; r < 10; r++){
@@ -186,10 +187,14 @@ public class discretehopfield {
                         }
 
                     }
-                    inputScan.nextLine();
+                    if (inputScan.hasNext()){
+                        inputScan.nextLine();
+                    }
 
                 }
-                inputScan.nextLine();
+                if (inputScan.hasNext()){
+                    inputScan.nextLine();
+                }
                 Random random = new Random();
                 int [] yin = new int[100];
                         for (int r = 0; r < 10; r++){
