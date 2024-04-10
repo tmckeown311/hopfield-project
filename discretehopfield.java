@@ -203,7 +203,9 @@ public class discretehopfield {
                             }
                         }
                 boolean converged = false;
+                int count = 0;
                 while (!converged){
+                    count += 1;
                     converged = true;
                     //initialize list of remaining neurons to choose from while testing
                     ArrayList<Integer> neuronsLeft= new ArrayList<>();
@@ -245,7 +247,7 @@ public class discretehopfield {
                     }
                     outputScan.write('\n');
                 }
-                outputScan.write("\n\n");
+                outputScan.write("\nNumber of epochs: "+count+"\n\n");
             }
             outputScan.close();
         }
