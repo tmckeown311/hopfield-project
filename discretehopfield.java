@@ -97,7 +97,6 @@ public class discretehopfield {
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = weightScan.next();
-                        System.out.print(curIn);
                         if ("O".equals(curIn)){
                             curMatrix[r][c] = 1;
                         }
@@ -174,19 +173,23 @@ public class discretehopfield {
             inputScan.nextLine();
             outputScan = new FileWriter(outputFile);
             for (int y = 0; y < numImages; y++) {
-                
-                //double for loop reads one matrix
+
+                outputScan.write("Input Pattern:\n");
+                //double for loop reads one matrix and prints read in matrix image
                 for (int r = 0; r < 10; r++){
                     for (int c = 0; c<10; c++){
                         String curIn = inputScan.next();
                         if ("O".equals(curIn)){
+                            outputScan.write('O');
                             inputMatrix[r][c] = 1;
                         }
                         else{
+                            outputScan.write(' ');
                             inputMatrix[r][c] = -1;
                         }
 
                     }
+                    outputScan.write('\n');
                     if (inputScan.hasNext()){
                         inputScan.nextLine();
                     }
@@ -235,7 +238,7 @@ public class discretehopfield {
                     }
                 }
                 //write out pattern recognized to file
-                outputScan.write("Pattern Recognized:\n");
+                outputScan.write("\nPattern Recognized:\n");
                 for (int i = 0; i < 10; i++){
                     for (int j = 0; j < 10; j++){
                         if (yin[(i*10)+j] == 1){
