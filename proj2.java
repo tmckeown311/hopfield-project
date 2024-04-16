@@ -14,7 +14,7 @@ import java.io.*;
         System.out.println("Welcome to my Discrete Hopfield Neural Net!");
         boolean rerun = true;
         while (rerun){
-            System.out.println("\nEnter 1 to train using a training data file");//\nEnter 2 to use pretrained weights");
+            System.out.println("\nEnter 1 to train using a training data file and Enter 2 to use pretrained weights ");
             int userChoice = scan.nextInt();
             while (userChoice > 2 || userChoice < 1){
                 System.out.println("invalid entry, please enter 1 or 2");
@@ -31,13 +31,11 @@ import java.io.*;
                 hopfieldNet.readWeightFile(new File(trainingFile), new File(weightFile));
 
             }
-            //else if (userChoice == 2){
-                //System.out.println("Enter the trained weight settings input data file name:");
-                //String weightFileData = scan.next();
-                //hopfieldNet.readWeightFile(new File(weightFileData));
-
-                //function the reads weight file here
-            //}
+            else if (userChoice == 2){
+                System.out.println("Enter the trained weight settings input data file name:");
+                String weightFileData = scan.next();
+                hopfieldNet.readExistingWeightFile(new File(weightFileData));
+            }
             System.out.println("Enter 1 to test using a testing data file, enter 2 to quit: ");
             userChoice = scan.nextInt();
             if (userChoice == 1){

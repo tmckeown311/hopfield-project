@@ -37,18 +37,20 @@ public class discretehopfield {
         int cols1 = matrix1[0].length;
         int rows2 = matrix2.length;
         int cols2 = matrix2[0].length;
+        int dimensions = rows1 * cols1;
+        int N = cols1;
 
         if (cols1 != rows2) {
             throw new IllegalArgumentException("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
 
-        int[][] result = new int[100][100];
+        int[][] result = new int[dimensions][dimensions];
 
         for (int curr = 0; curr < rows1; curr++){
             for (int curc = 0; curc < cols1; curc++){
                 for (int i = 0; i < rows2; i++) {
                     for (int j = 0; j < cols2; j++) {
-                        result[(curr*10)+curc][(i*10)+j] = matrix1[curr][curc] * matrix2[i][j];
+                        result[(curr*N)+curc][(i*N)+j] = matrix1[curr][curc] * matrix2[i][j];
                     }
                 }
             }
@@ -81,21 +83,23 @@ public class discretehopfield {
     public void readWeightFile(File input, File output){
         Scanner weightScan;
         FileWriter outputScan;
-        int [][] weightMatrix = new int[100][100];
         try{
             weightScan = new Scanner(input);
+            int dimensions =  weightScan.nextInt();
             weightScan.useDelimiter("");
             //jump past the headers of the file
+            int N = (int) Math.sqrt(dimensions);
+            int [][] weightMatrix = new int[dimensions][dimensions];
             weightScan.nextLine();
             int numImages = weightScan.nextInt();
             weightScan.nextLine();
             weightScan.nextLine();
-            int[][] curMatrix = new int[10][10];
-           for (int y = 0; y < numImages; y++) {
+            int[][] curMatrix = new int[N][N];
+            for (int y = 0; y < numImages; y++) {
                 
                 //double for loop reads one matrix
-                for (int r = 0; r < 10; r++){
-                    for (int c = 0; c<10; c++){
+                for (int r = 0; r < N; r++){
+                    for (int c = 0; c<N; c++){
                         String curIn = weightScan.next();
                         if ("O".equals(curIn)){
                             curMatrix[r][c] = 1;
@@ -105,7 +109,6 @@ public class discretehopfield {
                         }
 
                     }
-                    System.out.println();
                     if (weightScan.hasNext()){
                         weightScan.nextLine();
                     }
@@ -121,21 +124,23 @@ public class discretehopfield {
                 }
             }
             //set diagonal elements to 0
-            for (int e = 0; e < 100; e++){
+            for (int e = 0; e < dimensions; e++){
                 weightMatrix[e][e] = 0;
             }
             //add weight vectors by column to neurons as their own weight vectors
-            for (int c = 0; c< 100; c++){
-                int[] weightVector = new int [100];
-                for (int r = 0; r<100; r++){
+            for (int c = 0; c< dimensions; c++){
+                int[] weightVector = new int [dimensions];
+                for (int r = 0; r<dimensions; r++){
                     weightVector[r] = weightMatrix[r][c];
                 }
                 neurons[c].setWeights(weightVector);
             }
             outputScan = new FileWriter(output);
-            for (int i = 0; i < 100; i++){
-                for (int j = 0; j < 100; j++){
-                    outputScan.write(String.valueOf(weightMatrix[i][j]));
+            outputScan.write(dimensions + " (Dimensions)\n");
+
+            for (int i = 0; i < dimensions; i++){
+                for (int j = 0; j < dimensions; j++){
+                    outputScan.write(String.valueOf(weightMatrix[i][j] + " "));
                 }
                 outputScan.write('\n');
 
@@ -151,6 +156,45 @@ public class discretehopfield {
 
     }
 
+    public void readExistingWeightFile(File input){
+        Scanner weightScan;
+        try{
+            weightScan = new Scanner(input);
+            int dimensions = (int) weightScan.nextInt();
+            //jump past the headers of the file
+            
+            int [][] weightMatrix = new int[dimensions][dimensions];
+            weightScan.nextLine();
+                //double for loop reads one matrix
+            for (int r = 0; r < dimensions; r++){
+                for (int c = 0; c< dimensions; c++){
+                    int curIn = weightScan.nextInt();
+                    weightMatrix[r][c] = curIn;
+                    
+
+                }
+                if (weightScan.hasNext()){
+                    weightScan.nextLine();
+                }
+
+            }
+            for (int c = 0; c< dimensions; c++){
+                int[] weightVector = new int [dimensions];
+                for (int r = 0; r<dimensions; r++){
+                    weightVector[r] = weightMatrix[r][c];
+                }
+                neurons[c].setWeights(weightVector);
+            }
+        }
+            
+
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+
     public boolean allElementsNotZero(ArrayList<Integer> arr){
         for (int i = 0; i < arr.size(); i++){
             if (arr.get(i) != 0){
@@ -163,21 +207,23 @@ public class discretehopfield {
     public void testInput(File inputFile, File outputFile){
         Scanner inputScan;
         FileWriter outputScan;
-        int[][] inputMatrix = new int[10][10];
         try{
             inputScan = new Scanner(inputFile);
+            int dimensions = inputScan.nextInt();
             inputScan.useDelimiter("");
+            int N = (int) Math.sqrt(dimensions);
             inputScan.nextLine();
             int numImages = inputScan.nextInt();
             inputScan.nextLine();
             inputScan.nextLine();
             outputScan = new FileWriter(outputFile);
+            int[][] inputMatrix = new int[N][N];
             for (int y = 0; y < numImages; y++) {
 
                 outputScan.write("Input Pattern:\n");
                 //double for loop reads one matrix and prints read in matrix image
-                for (int r = 0; r < 10; r++){
-                    for (int c = 0; c<10; c++){
+                for (int r = 0; r < N; r++){
+                    for (int c = 0; c < N; c++){
                         String curIn = inputScan.next();
                         if ("O".equals(curIn)){
                             outputScan.write('O');
@@ -199,10 +245,10 @@ public class discretehopfield {
                     inputScan.nextLine();
                 }
                 Random random = new Random();
-                int [] yin = new int[100];
-                        for (int r = 0; r < 10; r++){
-                            for (int c = 0; c<10; c++){
-                                yin[(r*10)+c] = inputMatrix[r][c];
+                int [] yin = new int[dimensions];
+                        for (int r = 0; r < N; r++){
+                            for (int c = 0; c<N; c++){
+                                yin[(r*N)+c] = inputMatrix[r][c];
                             }
                         }
                 boolean converged = false;
@@ -212,7 +258,7 @@ public class discretehopfield {
                     converged = true;
                     //initialize list of remaining neurons to choose from while testing
                     ArrayList<Integer> neuronsLeft= new ArrayList<>();
-                    for (int i = 0; i < 100; i++){
+                    for (int i = 0; i < dimensions; i++){
                         neuronsLeft.add(i);
                     }
                     while (allElementsNotZero(neuronsLeft)){
@@ -222,7 +268,7 @@ public class discretehopfield {
                         neuronsLeft.remove(index);
                         //test selected neuron
                         neuron curNeuron = neurons[nextIndex];
-                        int x = inputMatrix[nextIndex/10][nextIndex%10];
+                        int x = inputMatrix[nextIndex/N][nextIndex%N];
                         int answer = curNeuron.calcAnswer(yin, x);
                         //if undecided, keep old value and doesn't converge
                         if (answer == 0){
@@ -239,12 +285,12 @@ public class discretehopfield {
                 }
                 //write out pattern recognized to file
                 outputScan.write("\nPattern Recognized:\n");
-                for (int i = 0; i < 10; i++){
-                    for (int j = 0; j < 10; j++){
-                        if (yin[(i*10)+j] == 1){
+                for (int i = 0; i < N; i++){
+                    for (int j = 0; j < N; j++){
+                        if (yin[(i*N)+j] == 1){
                             outputScan.write('O');
                         }
-                        else if (yin[(i*10)+j] == -1){
+                        else if (yin[(i*N)+j] == -1){
                             outputScan.write(' ');
                         }
                     }

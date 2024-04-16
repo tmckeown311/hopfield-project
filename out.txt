@@ -1,26 +1,208 @@
 Input Pattern:
-OO  OO  OO
-OO  OO  OO
+ O        
+    O    O
+  O   O   
+  O   O   
+   O      
+OO   O    
+  O   O   
   OO  OO  
-  OO  OO  
-OO  OO  OO
-OO  OO  OO
-  OO  OO  
-  OO  OO  
-OO  OO  OO
-OO  OO  OO
+O         
+ O      O 
 
 Pattern Recognized:
-OO  OO  OO
-OO  OO  OO
-  OO  OO  
-  OO  OO  
-OO  OO  OO
-OO  OO  OO
-  OO  OO  
-  OO  OO  
-OO  OO  OO
-OO  OO  OO
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
 
-Number of epochs: 1
+Number of epochs: 3
+
+Input Pattern:
+O   O     
+OO        
+O   O     
+O O       
+OO        
+        OO
+      O   
+     OOOO 
+      OO  
+      O OO
+
+Pattern Recognized:
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+
+Number of epochs: 2
+
+Input Pattern:
+          
+ O  O     
+          
+          
+ O        
+     O    
+O     O  O
+          
+          
+O     O   
+
+Pattern Recognized:
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+
+Number of epochs: 4
+
+Input Pattern:
+OOO O O OO
+O        O
+O        O
+         O
+O   OO O O
+O O       
+  O      O
+    O O  O
+O         
+O OO OO  O
+
+Pattern Recognized:
+OOOOOOOOOO
+O        O
+O OOOOOO O
+O O    O O
+O O OO O O
+O O OO O O
+O O    O O
+O OOOOOO O
+O        O
+OOOOOOOOOO
+
+Number of epochs: 2
+
+Input Pattern:
+        OO
+         O
+       O O
+      O  O
+     OOO O
+          
+O         
+O O       
+  O O     
+OO  O     
+
+Pattern Recognized:
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+     OOOOO
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+OOOOO     
+
+Number of epochs: 2
+
+Input Pattern:
+O OOOOOOO 
+OO       O
+O        O
+OO       O
+         O
+O       O 
+O       OO
+O OO     O
+O       OO
+OO O OO OO
+
+Pattern Recognized:
+OOOOOOOOOO
+O        O
+O OOOOOO O
+O O    O O
+O O OO O O
+O O OO O O
+O O    O O
+O OOOOOO O
+O        O
+OOOOOOOOOO
+
+Number of epochs: 3
+
+Input Pattern:
+          
+        OO
+       O O
+       O  
+      O OO
+     OOO O
+     OO OO
+     OOO O
+       OOO
+     OOOOO
+
+Pattern Recognized:
+          
+         O
+        OO
+       OOO
+      OOOO
+     OOOOO
+    OOOOOO
+   OOOOOOO
+  OOOOOOOO
+ OOOOOOOOO
+
+Number of epochs: 2
+
+Input Pattern:
+OOOOO     
+OOOOOO    
+  OOO     
+OO  O     
+ OO OO    
+O O O     
+ O        
+O O       
+O         
+          
+
+Pattern Recognized:
+OOOOOOOOO 
+OOOOOOOO  
+OOOOOOO   
+OOOOOO    
+OOOOO     
+OOOO      
+OOO       
+OO        
+O         
+          
+
+Number of epochs: 2
 
